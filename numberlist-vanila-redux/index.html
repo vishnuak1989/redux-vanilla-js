@@ -1,0 +1,107 @@
+<html>
+    <head>
+        <title>Number List using Vanilla JS and Redux</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.0.0/redux.js"></script>
+    </head>
+    <body>
+        <div>
+            
+                <input id="inputNumberField" type="number" placeholder="Insert a number"></input>
+                <button id="add" name="Add">Add</button>
+          
+            <div>
+                <h2>List of numbers</h2>
+                <div id="list"></div>
+                
+            </div>
+            
+        </div>
+        <script>
+            //actions
+            var actions ={
+                addToList : function(item){
+                    return { type: types.ADD_TO_LIST, item}
+                }
+            }
+            //types
+            var types = {
+                ADD_TO_LIST : 'ADD_TO_LIST'
+            } 
+            //reducers
+            var initialState = []
+            function numberlist(state,action) {
+                var state = state || initialState;
+
+                switch (action.type) {
+                    case types.ADD_TO_LIST:
+                        state.push(action.item)
+                        return state                  
+                    default:
+                        return state
+                        break;
+                }
+            }
+            var rootReducer = Redux.combineReducers({numberlist})
+            
+            // app.js
+            var store = Redux.createStore(rootReducer);
+            var input = document.getElementById("inputNumberField")
+            var add = document.getElementById("add")
+            var list = document.getElementById("list")
+
+            function render(){
+                var numberlist = store.getState().numberlist;
+                console.log(numberlist)
+                //sorting array
+                var sortedArray = numberlist.sort(function(a,b){
+                    return a-b
+                })
+                var html=[]
+                for (var number of sortedArray){
+                    html +=  "<li>"+number+"</li>"
+                }
+                list.innerHTML = "<ul>"+html+"</ul>";
+            }
+
+            add.addEventListener('click',function(){
+                var item = input.value;
+                store.dispatch(actions.addToList(item));
+                input.value = " ";
+            })
+
+            render();
+            store.subscribe(render);
+            //end of app.js
+
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+           
+            
+
+          
+        </script>
+    </body>
+</html>

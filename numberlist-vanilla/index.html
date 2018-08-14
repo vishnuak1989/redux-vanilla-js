@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <title>Number List using Vanilla JS</title>
+    </head>
+    <body>
+        <div>
+            
+                <input id="inputNumberField" type="number" placeholder="Insert a number"></input>
+                <button id="add" name="Add">Add</button>
+          
+            <div>
+                <h2>List of numbers</h2>
+                <div id="list"></div>
+                
+            </div>
+            
+        </div>
+        <script>
+            var arrayOfNumbers= new Array();   
+            var addButton = document.getElementById("add");
+            var inputNumberField = document.getElementById("inputNumberField")
+            var list = document.getElementById("list")
+           
+            addButton.addEventListener('click',function(){
+                arrayOfNumbers.push(inputNumberField.value)  
+                var sortedArray = arrayOfNumbers.sort(function(a,b){
+                    return a-b
+                })
+                inputNumberField.value=" ";
+                displayList(sortedArray)
+                
+            })
+            
+            function displayList(array){
+                var html=[]
+                for (var number of array){
+                    html +=  "<li>"+number+"</li>"
+                }
+                list.innerHTML = "<ul>"+html+"</ul>";
+            }
+            
+
+          
+        </script>
+    </body>
+</html>
